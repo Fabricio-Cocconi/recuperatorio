@@ -1,0 +1,31 @@
+import pytest
+from maquina_de_flexiones import Usuario, Objetivo, SesionDeFlexiones
+
+def test_usuario_mayor_edad():
+    # Probamos si un usuario mayor de edad es identificado correctamente
+    usuario = Usuario("Carlos", 25, "12345678")
+    assert usuario.es_mayor_edad() is True
+
+def test_usuario_menor_edad():
+    # Probamos si un usuario menor de edad es identificado correctamente
+    usuario = Usuario("Ana", 16, "87654321")
+    assert usuario.es_mayor_edad() is False
+
+def test_objetivo_flexiones():
+    # Verificamos si el objetivo de flexiones es establecido correctamente
+    objetivo = Objetivo(30)
+    assert objetivo.get_flexiones() == 30
+
+def test_sesion_flexiones():
+    # Verificamos si la sesión de flexiones se realiza correctamente
+    usuario = Usuario("Carlos", 25, "12345678")
+    objetivo = Objetivo(30)
+    sesion = SesionDeFlexiones(usuario, objetivo)
+    
+    # Simulamos realizar las flexiones hasta cumplir el objetivo
+    for _ in range(30):
+        sesion.agregar_flexion()
+    
+    # Verificamos que se hayan realizado todas las flexiones y la sesión esté finalizada
+    assert sesion.get_flexiones_realizadas() == 30
+    assert sesion.get_estado_sesion() == "Finalizada"

@@ -1,0 +1,52 @@
+import pytest
+from maquina_de_flexiones import Usuario, Objetivo, SesionDeFlexiones
+
+def test_agregar_flexion():
+    usuario = Usuario("Carlos", 25, "12345678")
+    objetivo = Objetivo(5)
+    sesion = SesionDeFlexiones(usuario, objetivo)
+
+    # Agregamos flexiones y verificamos el progreso
+    for _ in range(3):
+        sesion.agregar_flexion()
+
+    assert sesion.get_flexiones_realizadas() == 3
+    assert sesion.get_estado_sesion() == "Iniciada"
+
+def test_finalizar_sesion():
+    usuario = Usuario("Ana", 30, "87654321")
+    objetivo = Objetivo(3)
+    sesion = SesionDeFlexiones(usuario, objetivo)
+
+    # Agregamos flexiones hasta alcanzar el objetivo
+    for _ in range(3):
+        sesion.agregar_flexion()
+
+    assert sesion.get_flexiones_realizadas() == 3
+    assert sesion.get_estado_sesion() == "Finalizada"
+
+def test_no_agregar_flexion_despues_de_finalizar():
+    usuario = Usuario("Luis", 20, "11111111")
+    objetivo = Objetivo(2)
+    sesion = SesionDeFlexiones(usuario, objetivo)
+
+    # Agregamos flexiones para finalizar la sesión
+    for _ in range(2):
+        sesion.agregar_flexion()
+
+    # Intentamos agregar una flexión después de finalizar
+    with pytest.raises(RuntimeError, match="La sesión ya está finalizada."):
+        sesion.agregar_flexion()
+
+def test_mostrar_progreso():
+    usuario = Usuario("Marta", 22, "22222222")
+    objetivo = Objetivo(4)
+    sesion = SesionDeFlexiones(usuario, objetivo)
+
+    # Agregamos algunas flexiones
+    for _ in range(2):
+        sesion.agregar_flexion()
+
+    # Verificamos el estado de la sesión
+    assert sesion.get_flexiones_realizadas() == 2
+    assert sesion.get_estado_sesion() == "Iniciada"
