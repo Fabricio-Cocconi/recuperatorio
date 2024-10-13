@@ -46,7 +46,7 @@ class SesionDeFlexiones:
         return self.__estado_sesion
 
     def __str__(self):
-        estado_objetivo = "Alcanzado" si self.__estado_sesion == "Finalizada" else "No Alcanzado"
+        estado_objetivo = "Alcanzado" if self.__estado_sesion == "Finalizada" else "No Alcanzado"
         return (f"{self.__usuario.get_nombre()}\n"
                 f"Flexiones realizadas: {self.__flexiones_realizadas}\n"
                 f"Objetivo: {self.__objetivo.get_flexiones()} flexiones\n"
